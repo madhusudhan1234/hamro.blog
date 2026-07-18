@@ -1,0 +1,127 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import siteData from "../data/site.json";
+
+const contactMethods = [
+	{
+		title: "Email",
+		description: "hello@hamro.blog",
+		href: "mailto:hello@hamro.blog",
+	},
+	{
+		title: "Community",
+		description: "nepal-dev.com",
+		href: "https://nepal-dev.com",
+	},
+];
+---
+
+<MainLayout
+	title="Contact"
+	description="Get in touch with the hamro.blog team."
+>
+	<section class="py-12 md:py-20 bg-gradient-to-r from-primary/10 to-secondary/10">
+		<div class="container text-center">
+			<h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">
+				Get in Touch
+			</h1>
+			<p class="text-xl text-muted-foreground max-w-3xl mx-auto">
+				Have a question, feedback, or an article you'd like to share
+				on {siteData.name}? We'd love to hear from you.
+			</p>
+		</div>
+	</section>
+
+	<section class="py-12 md:py-16">
+		<div class="container grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl">
+			<div>
+				<h2 class="text-2xl font-bold tracking-tight mb-6">
+					Send us a message
+				</h2>
+				<form class="space-y-4">
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<div class="space-y-2">
+							<label for="name" class="text-sm font-medium"
+								>Name</label
+							>
+							<input
+								id="name"
+								name="name"
+								type="text"
+								required
+								placeholder="Your name"
+								class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+							/>
+						</div>
+						<div class="space-y-2">
+							<label for="email" class="text-sm font-medium"
+								>Email</label
+							>
+							<input
+								id="email"
+								name="email"
+								type="email"
+								required
+								placeholder="you@example.com"
+								class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+							/>
+						</div>
+					</div>
+					<div class="space-y-2">
+						<label for="subject" class="text-sm font-medium"
+							>Subject</label
+						>
+						<input
+							id="subject"
+							name="subject"
+							type="text"
+							required
+							placeholder="What's this about?"
+							class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+						/>
+					</div>
+					<div class="space-y-2">
+						<label for="message" class="text-sm font-medium"
+							>Message</label
+						>
+						<textarea
+							id="message"
+							name="message"
+							rows="6"
+							required
+							placeholder="Tell us more..."
+							class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+						></textarea>
+					</div>
+					<button
+						type="submit"
+						class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 py-2"
+					>
+						Send Message
+					</button>
+				</form>
+			</div>
+
+			<div class="space-y-6">
+				<h2 class="text-2xl font-bold tracking-tight mb-2">
+					Other ways to reach us
+				</h2>
+				{
+					contactMethods.map((method) => (
+						<a
+							href={method.href}
+							class="block rounded-lg border bg-background p-6 shadow-sm hover:shadow-md transition-shadow"
+						>
+							<h3 class="text-lg font-medium mb-1">
+								{method.title}
+							</h3>
+							<p class="text-muted-foreground">
+								{method.description}
+							</p>
+						</a>
+					))
+				}
+			</div>
+		</div>
+	</section>
+</MainLayout>

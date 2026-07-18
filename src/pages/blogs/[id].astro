@@ -1,0 +1,129 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import {
+	articles,
+	getArticleWithAuthor,
+	getArticlesByAuthor,
+} from "../../data/articles";
+
+export function getStaticPaths() {
+	return articles.map((article) => ({
+		params: { id: String(article.id) },
+	}));
+}
+
+const { id } = Astro.params;
+const article = getArticleWithAuthor(
+	articles.find((a) => a.id === Number(id))!,
+);
+
+const moreFromAuthor = getArticlesByAuthor(article.authorId)
+	.filter((a) => a.id !== article.id)
+	.slice(0, 3);
+---
+
+<MainLayout title={article.title} description={article.excerpt}>
+	<article class="py-12 md:py-16">
+		<div class="container max-w-3xl">
+			<div class="flex items-center gap-2 mb-4">
+				{
+					article.tags.map((tag) => (
+						<span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+							{tag}
+						</span>
+					))
+				}
+			</div>
+
+			<h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-6">
+				{article.title}
+			</h1>
+
+			<div class="flex items-center justify-between border-y py-4 mb-8">
+				<a
+					href={`/authors/${article.author.id}`}
+					class="flex items-center gap-3"
+				>
+					<img
+						src={article.author.avatar}
+						alt={article.author.name}
+						class="h-10 w-10 rounded-full object-cover"
+					/>
+					<div>
+						<div class="text-sm font-medium">
+							{article.author.name}
+						</div>
+						<div class="text-xs text-muted-foreground">
+							{article.author.role}
+						</div>
+					</div>
+				</a>
+				<span class="text-sm text-muted-foreground">{article.date}</span>
+			</div>
+
+			<div class="aspect-video overflow-hidden rounded-lg mb-8">
+				<img
+					src={article.image}
+					alt={article.title}
+					class="h-full w-full object-cover"
+				/>
+			</div>
+
+			<div class="prose prose-neutral max-w-none">
+				{
+					article.content.map((paragraph) => (
+						<p class="text-lg leading-relaxed mb-6 text-foreground/90">
+							{paragraph}
+						</p>
+					))
+				}
+			</div>
+
+			<div class="rounded-lg border bg-muted/50 p-6 mt-8">
+				<p class="text-sm text-muted-foreground mb-3">
+					This is an excerpt shared by {article.author.name}. Read the
+					full article on the original site.
+				</p>
+				<a
+					href={article.sourceUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+				>
+					Read Original Article
+				</a>
+			</div>
+
+			{
+				moreFromAuthor.length > 0 && (
+					<div class="mt-16">
+						<h2 class="text-2xl font-bold tracking-tight mb-6">
+							More from {article.author.name}
+						</h2>
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+							{moreFromAuthor.map((related) => (
+								<a
+									href={`/blogs/${related.id}`}
+									class="group block overflow-hidden rounded-lg border bg-background shadow-sm transition-all hover:shadow-md"
+								>
+									<div class="aspect-video overflow-hidden">
+										<img
+											src={related.image}
+											alt={related.title}
+											class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+										/>
+									</div>
+									<div class="p-4">
+										<h3 class="font-bold leading-tight line-clamp-2">
+											{related.title}
+										</h3>
+									</div>
+								</a>
+							))}
+						</div>
+					</div>
+				)
+			}
+		</div>
+	</article>
+</MainLayout>

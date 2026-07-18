@@ -1,0 +1,95 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import siteData from "../data/site.json";
+
+const lastUpdated = "July 18, 2026";
+---
+
+<MainLayout
+	title="Terms of Service"
+	description="Terms of Service for hamro.blog."
+>
+	<section class="py-12 md:py-16">
+		<div class="container max-w-3xl">
+			<h1 class="text-4xl font-bold tracking-tight mb-2">
+				Terms of Service
+			</h1>
+			<p class="text-sm text-muted-foreground mb-10">
+				Last updated: {lastUpdated}
+			</p>
+
+			<div class="space-y-8 text-muted-foreground leading-relaxed">
+				<section>
+					<h2 class="text-xl font-bold text-foreground mb-2">
+						1. Acceptance of Terms
+					</h2>
+					<p>
+						By accessing or using {siteData.name}, you agree to be
+						bound by these Terms of Service. If you do not agree
+						to these terms, please do not use the site.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-xl font-bold text-foreground mb-2">
+						2. Description of Service
+					</h2>
+					<p>
+						{siteData.name} is a platform where developers can
+						share their blog posts or excerpts, linking back to
+						the original source. We do not claim ownership of any
+						content submitted by authors.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-xl font-bold text-foreground mb-2">
+						3. Content Ownership
+					</h2>
+					<p>
+						Authors retain full ownership and copyright of the
+						content they submit. By posting on {siteData.name},
+						you grant us a non-exclusive license to display your
+						content, or excerpts of it, alongside a link to your
+						original source.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-xl font-bold text-foreground mb-2">
+						4. Acceptable Use
+					</h2>
+					<p>
+						You agree not to submit content that is unlawful,
+						infringes on the rights of others, or is otherwise
+						harmful, misleading, or spam. We reserve the right to
+						remove content that violates these terms.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-xl font-bold text-foreground mb-2">
+						5. Changes to These Terms
+					</h2>
+					<p>
+						We may update these Terms of Service from time to
+						time. Continued use of the site after changes are
+						posted constitutes acceptance of the revised terms.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-xl font-bold text-foreground mb-2">
+						6. Contact
+					</h2>
+					<p>
+						Questions about these terms can be sent through our <a
+							href="/contact"
+							class="text-primary hover:underline">contact page</a
+						>.
+					</p>
+				</section>
+			</div>
+		</div>
+	</section>
+</MainLayout>

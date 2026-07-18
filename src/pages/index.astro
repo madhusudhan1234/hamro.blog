@@ -1,172 +1,23 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import {
+	articles,
+	getArticleWithAuthor,
+	getAuthorArticleCount,
+} from "../data/articles";
+import { authors } from "../data/authors";
 
-// Mock data for featured articles
-const featuredArticles = [
-	{
-		id: 1,
-		title: "Building Scalable Web Applications with React and Node.js",
-		excerpt:
-			"Learn how to build scalable web applications using React for the frontend and Node.js for the backend.",
-		image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
-		author: {
-			name: "John Doe",
-			avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-		},
-		date: "June 12, 2023",
-		tags: ["React", "Node.js", "Web Development"],
-	},
-	{
-		id: 2,
-		title: "Getting Started with TypeScript: A Comprehensive Guide",
-		excerpt:
-			"TypeScript is a powerful superset of JavaScript that adds static typing to the language. This guide will help you get started with TypeScript.",
-		image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop",
-		author: {
-			name: "Jane Smith",
-			avatar: "https://randomuser.me/api/portraits/women/1.jpg",
-		},
-		date: "May 28, 2023",
-		tags: ["TypeScript", "JavaScript", "Programming"],
-	},
-	{
-		id: 3,
-		title: "Mastering CSS Grid Layout: Tips and Tricks",
-		excerpt:
-			"CSS Grid Layout is a powerful tool for creating complex web layouts. Learn how to master it with these tips and tricks.",
-		image: "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?q=80&w=2070&auto=format&fit=crop",
-		author: {
-			name: "Mike Johnson",
-			avatar: "https://randomuser.me/api/portraits/men/2.jpg",
-		},
-		date: "April 15, 2023",
-		tags: ["CSS", "Web Design", "Frontend"],
-	},
-];
+const featuredArticles = articles
+	.filter((article) => article.featured)
+	.map(getArticleWithAuthor);
 
-// Mock data for authors
-const authors = [
-	{
-		id: 1,
-		name: "John Doe",
-		avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-		bio: "Full Stack Developer with 5+ years of experience in React and Node.js",
-		articles: 24,
-	},
-	{
-		id: 2,
-		name: "Jane Smith",
-		avatar: "https://randomuser.me/api/portraits/women/1.jpg",
-		bio: "Frontend Developer specializing in TypeScript and React",
-		articles: 18,
-	},
-	{
-		id: 3,
-		name: "Mike Johnson",
-		avatar: "https://randomuser.me/api/portraits/men/2.jpg",
-		bio: "UI/UX Designer and CSS Expert",
-		articles: 15,
-	},
-	{
-		id: 4,
-		name: "Sarah Williams",
-		avatar: "https://randomuser.me/api/portraits/women/2.jpg",
-		bio: "Backend Developer with expertise in Node.js and MongoDB",
-		articles: 12,
-	},
-	{
-		id: 5,
-		name: "David Brown",
-		avatar: "https://randomuser.me/api/portraits/men/3.jpg",
-		bio: "DevOps Engineer and Cloud Architect",
-		articles: 9,
-	},
-];
-
-// Mock data for latest blogs
-const latestBlogs = [
-	{
-		id: 1,
-		title: "Introduction to Astro.js: The All-in-One Web Framework",
-		excerpt:
-			"Astro.js is a modern web framework that allows you to build faster websites with less client-side JavaScript.",
-		image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?q=80&w=2074&auto=format&fit=crop",
-		author: {
-			name: "John Doe",
-			avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-		},
-		date: "June 20, 2023",
-		tags: ["Astro.js", "Web Development", "JavaScript"],
-	},
-	{
-		id: 2,
-		title: "Understanding React Hooks: A Deep Dive",
-		excerpt:
-			"React Hooks are a powerful feature that allows you to use state and other React features without writing a class.",
-		image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
-		author: {
-			name: "Jane Smith",
-			avatar: "https://randomuser.me/api/portraits/women/1.jpg",
-		},
-		date: "June 18, 2023",
-		tags: ["React", "Hooks", "JavaScript"],
-	},
-	{
-		id: 3,
-		title: "Building RESTful APIs with Express.js",
-		excerpt:
-			"Express.js is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.",
-		image: "https://images.unsplash.com/photo-1654277041218-84424c78f0ae?q=80&w=2070&auto=format&fit=crop",
-		author: {
-			name: "Mike Johnson",
-			avatar: "https://randomuser.me/api/portraits/men/2.jpg",
-		},
-		date: "June 15, 2023",
-		tags: ["Express.js", "Node.js", "API"],
-	},
-	{
-		id: 4,
-		title: "CSS-in-JS: Styling React Components",
-		excerpt:
-			"CSS-in-JS is a styling technique where JavaScript is used to style components. Learn how to use it in your React applications.",
-		image: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop",
-		author: {
-			name: "Sarah Williams",
-			avatar: "https://randomuser.me/api/portraits/women/2.jpg",
-		},
-		date: "June 10, 2023",
-		tags: ["CSS-in-JS", "React", "Styling"],
-	},
-	{
-		id: 5,
-		title: "Getting Started with Docker for Web Developers",
-		excerpt:
-			"Docker is a platform for developing, shipping, and running applications in containers. Learn how to use it in your web development workflow.",
-		image: "https://images.unsplash.com/photo-1605745341112-85968b19335b?q=80&w=2071&auto=format&fit=crop",
-		author: {
-			name: "David Brown",
-			avatar: "https://randomuser.me/api/portraits/men/3.jpg",
-		},
-		date: "June 5, 2023",
-		tags: ["Docker", "DevOps", "Web Development"],
-	},
-	{
-		id: 6,
-		title: "Introduction to GraphQL: A Better Way to API",
-		excerpt:
-			"GraphQL is a query language for your API, and a server-side runtime for executing queries by using a type system you define for your data.",
-		image: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=2070&auto=format&fit=crop",
-		author: {
-			name: "John Doe",
-			avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-		},
-		date: "June 1, 2023",
-		tags: ["GraphQL", "API", "Web Development"],
-	},
-];
+const latestBlogs = articles
+	.filter((article) => !article.featured)
+	.slice(0, 6)
+	.map(getArticleWithAuthor);
 ---
 
-<MainLayout title="About Us">
+<MainLayout>
 	<!-- Hero Section with Featured Articles -->
 	<section
 		class="py-12 md:py-20 bg-gradient-to-r from-primary/10 to-secondary/10"
@@ -265,7 +116,7 @@ const latestBlogs = [
 								{author.bio}
 							</p>
 							<div class="text-xs text-muted-foreground">
-								{author.articles} Articles
+								{getAuthorArticleCount(author.id)} Articles
 							</div>
 							<a
 								href={`/authors/${author.id}`}
