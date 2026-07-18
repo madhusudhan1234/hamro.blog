@@ -1,0 +1,95 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import siteData from "../data/site.json";
+
+const values = [
+	{
+		title: "Community First",
+		description:
+			"hamro.blog is built by developers, for developers. Every feature we add starts with what helps the community share and learn.",
+	},
+	{
+		title: "Give Credit, Drive Traffic",
+		description:
+			"We publish excerpts that link back to the original source, so authors get the recognition and traffic their writing deserves.",
+	},
+	{
+		title: "Open Knowledge",
+		description:
+			"Great technical writing shouldn't be locked away in one corner of the internet. We help good posts reach a wider audience.",
+	},
+];
+---
+
+<MainLayout
+	title="About"
+	description="Learn about hamro.blog, a developer community blog platform."
+>
+	<section class="py-12 md:py-20 bg-gradient-to-r from-primary/10 to-secondary/10">
+		<div class="container text-center">
+			<h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">
+				About {siteData.name}
+			</h1>
+			<p class="text-xl text-muted-foreground max-w-3xl mx-auto">
+				{siteData.description}
+			</p>
+		</div>
+	</section>
+
+	<section class="py-12 md:py-16">
+		<div class="container max-w-3xl">
+			<h2 class="text-3xl font-bold tracking-tight mb-4">Our Story</h2>
+			<p class="text-lg text-muted-foreground leading-relaxed mb-4">
+				"Hamro" means "ours" in Nepali. We started hamro.blog as a
+				shared home for developers to post their writing, or an
+				excerpt of it, alongside a link back to where it was
+				originally published — a personal blog, a company engineering
+				blog, or anywhere else.
+			</p>
+			<p class="text-lg text-muted-foreground leading-relaxed">
+				Instead of asking writers to choose between publishing on
+				their own site or reaching a wider audience, hamro.blog lets
+				them do both. Readers discover great articles in one place,
+				and authors keep ownership of their original content.
+			</p>
+		</div>
+	</section>
+
+	<section class="py-12 bg-muted/50">
+		<div class="container">
+			<h2 class="text-3xl font-bold tracking-tight text-center mb-12">
+				What We Care About
+			</h2>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				{
+					values.map((value) => (
+						<div class="rounded-lg bg-background border p-6 shadow-sm">
+							<h3 class="text-xl font-bold mb-2">{value.title}</h3>
+							<p class="text-muted-foreground">
+								{value.description}
+							</p>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="py-12 md:py-16">
+		<div class="container max-w-3xl text-center">
+			<h2 class="text-3xl font-bold tracking-tight mb-4">
+				Want to contribute?
+			</h2>
+			<p class="text-lg text-muted-foreground mb-6">
+				We're always excited to feature new voices from the developer
+				community.
+			</p>
+			<a
+				href="/contact"
+				class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
+			>
+				Get in Touch
+			</a>
+		</div>
+	</section>
+</MainLayout>
