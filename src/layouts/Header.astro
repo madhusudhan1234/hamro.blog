@@ -49,6 +49,86 @@ const getFooterLinkClass = (path: string) => {
                 >
                 <a href="/about" class={getNavLinkClass("/about")}>About</a>
             </nav>
+            <button
+                id="mobile-menu-button"
+                type="button"
+                aria-controls="mobile-menu"
+                aria-expanded="false"
+                aria-label="Toggle navigation menu"
+                class="inline-flex items-center justify-center rounded-md p-2 text-foreground/60 hover:bg-accent hover:text-foreground md:hidden"
+            >
+                <svg
+                    id="mobile-menu-icon-open"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <line x1="4" x2="20" y1="6" y2="6"></line>
+                    <line x1="4" x2="20" y1="12" y2="12"></line>
+                    <line x1="4" x2="20" y1="18" y2="18"></line>
+                </svg>
+                <svg
+                    id="mobile-menu-icon-close"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="hidden"
+                >
+                    <line x1="18" x2="6" y1="6" y2="18"></line>
+                    <line x1="6" x2="18" y1="6" y2="18"></line>
+                </svg>
+            </button>
         </div>
     </div>
+    <nav
+        id="mobile-menu"
+        class="hidden flex-col gap-1 border-t bg-background px-4 py-3 md:hidden"
+    >
+        <a href="/" class={`${getNavLinkClass("/")} py-2`}>Home</a>
+        <a href="/blogs" class={`${getNavLinkClass("/blogs")} py-2`}>Blogs</a>
+        <a href="/authors" class={`${getNavLinkClass("/authors")} py-2`}
+            >Authors</a
+        >
+        <a href="/about" class={`${getNavLinkClass("/about")} py-2`}>About</a>
+    </nav>
 </header>
+
+<script>
+    const menuButton = document.getElementById("mobile-menu-button");
+    const menu = document.getElementById("mobile-menu");
+    const iconOpen = document.getElementById("mobile-menu-icon-open");
+    const iconClose = document.getElementById("mobile-menu-icon-close");
+
+    const setMenuOpen = (open: boolean) => {
+        menuButton?.setAttribute("aria-expanded", String(open));
+        menu?.classList.toggle("hidden", !open);
+        menu?.classList.toggle("flex", open);
+        iconOpen?.classList.toggle("hidden", open);
+        iconClose?.classList.toggle("hidden", !open);
+    };
+
+    menuButton?.addEventListener("click", () => {
+        const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+        setMenuOpen(!isOpen);
+    });
+
+    menu?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => setMenuOpen(false));
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) setMenuOpen(false);
+    });
+</script>
